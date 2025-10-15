@@ -1,0 +1,53 @@
+trainer:
+  model_name: "AFC_SPEX" # must be the same as the key in model_config.yaml
+  loss_name: "TimeFreqLoss" 
+  epochs: 14
+  clip_grad_norm_value: 5.0
+  save_checkpoint_interval: 1
+  resume: True
+  resume_datetime: 2025-10-01-23h07m
+  dataset_path: '/data/ssd1/ze.li/prep/'
+  exp_path: '/data/ssd1/ze.li/experiments/afc_spex'
+
+DDP:
+  world_size: 1
+
+scheduler:
+  kwargs:
+    warmup_steps: 25000
+    decay_until_step: 250000
+    max_lr: 1e-3
+    min_lr: 1e-6
+  update_interval: step  # [step, epoch]
+
+optimizer:
+  lr: 0.001
+
+train_dataset:
+  dir_path: ${trainer.dataset_path}
+  data_num: 5000
+  mode: train
+  sample_rate: ${sample_rate}
+
+train_dataloader:
+  batch_size: 1
+  drop_last: True
+
+validation_dataset:
+  dir_path: ${trainer.dataset_path}
+  data_num: 500
+  mode: val
+  sample_rate: ${sample_rate}
+
+validation_dataloader:
+  batch_size: 1
+  drop_last: True
+
+TimeFreqLoss:
+  _target_: afcspex_models.loss
+  init_args:
+    hop_len: ${pbfd_config.hop_len}
+    fft_len: ${pbfd_config.fft_len}
+
+
+

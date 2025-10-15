@@ -1,0 +1,53 @@
+sample_rate: 16000
+
+pbfd_config: # partitioned frequency domain config
+  hop_len: 256
+  n_block: 4
+  n_overlap: 2 # this value should be fixed to 2
+  fft_len: 512 # must be two times of hop_len
+  win_len: ${pbfd_config.fft_len}
+  rir_len: 1024  # must equals to n_block * hop_len
+  kalman_filter_len: ${pbfd_config.rir_len} # for this script, it must be the same as rir_len
+
+IdealAFC_DNSF:
+  _target_: afcspex_models.ideal_afc_dnsf_model
+  train_init_args:
+    streaming_mode: False
+    n_channels: 3
+    fft_len: ${pbfd_config.fft_len}
+    hop_len: ${pbfd_config.hop_len}
+  infer_init_args:
+    streaming_mode: True
+    n_channels: 3
+    fft_len: ${pbfd_config.fft_len}
+    hop_len: ${pbfd_config.hop_len}
+  infer_setup:
+    require_loudspeaker_data: False
+
+AFC_SPEX:
+  _target_: afcspex_models.afcspex_model
+  train_init_args:
+    streaming_mode: False
+    n_channels: 3
+    state_factor: 0.99999
+    alpha_e: 0.7
+    beta_f: 0.1
+    kalman_filter_len: ${pbfd_config.kalman_filter_len}
+    n_block: ${pbfd_config.n_block}
+    fft_len: ${pbfd_config.fft_len}
+    hop_len: ${pbfd_config.hop_len}
+  infer_init_args:
+    streaming_mode: True
+    n_channels: 3
+    state_factor: 0.99999
+    alpha_e: 0.7
+    beta_f: 0.1
+    kalman_filter_len: ${pbfd_config.kalman_filter_len}
+    n_block: ${pbfd_config.n_block}
+    fft_len: ${pbfd_config.fft_len}
+    hop_len: ${pbfd_config.hop_len}
+  infer_setup:
+    require_loudspeaker_data: True
+
+
+    

@@ -1,0 +1,24 @@
+infer:
+  model_name: "AFC_SPEX" # must be the same as the key in model_config.yaml
+  dataset_path: '/data/ssd1/ze.li/prep/'
+  exp_path: '/data/ssd1/ze.li/experiments/afc_spex_2025-10-01-23h07m'
+  ckpt_name: model_085
+  checkpoint: ${infer.exp_path}/checkpoints/${infer.ckpt_name}.tar
+  enh_folder: ${infer.exp_path}/inference/${infer.ckpt_name}
+
+delay: 2 # delay in seconds * sample_rate / hop_len
+
+gain: 5
+
+maxamp: 1
+
+test_dataset:
+  dir_path: ${infer.dataset_path}
+  data_num: 500
+  mode: test
+  sample_rate: ${sample_rate}
+
+test_dataloader:
+  shuffle: False
+  batch_size: 50
+  drop_last: False
