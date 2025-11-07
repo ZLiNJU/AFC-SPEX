@@ -90,6 +90,8 @@ class PBFDKalmanFilter(nn.Module):
                 self.P1[:, :, 2, :] = 0.4
                 self.P1[:, :, 1, :] = 0.2
                 self.P1[:, :, 0, :] = 0.1
+            else:
+                self.P1[:, :, :, ;] = 1.6e-2
             self.phi_e = torch.zeros(n_batch, self.n_bin, self.n_channels).to(device)
             self.phi_f = torch.zeros(n_batch, self.n_bin, self.n_block, self.n_channels).to(device)
             self.phi_n = torch.zeros(self.phi_f.shape).to(device)
