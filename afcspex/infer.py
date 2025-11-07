@@ -139,9 +139,9 @@ def closed_loop_simulation(model: torch.nn.Module, target: torch.Tensor,
             loudspeaker[:, :, t+delay] = gain * enhanced[:, :,  t]
             loudspeaker[:, :, t+delay] = torch.clamp(loudspeaker[:, :, t+delay], -maxamp, maxamp)
 
-            loudspeaker_buffer[:, :n_block * hop_len] = loudspeaker_buffer[:, hop_len:]
+            loudspeaker_buffer[:, :n_block * hop_len] = loudspeaker_buffer[:, hop_len:].clone()
             loudspeaker_buffer[:, n_block * hop_len:] = loudspeaker[:, :, t]
-            fd_loudspeaker_buffer[:, :, :n_block-1] = fd_loudspeaker_buffer[:, :, 1:]
+            fd_loudspeaker_buffer[:, :, :n_block-1] = fd_loudspeaker_buffer[:, :, 1:].clone()
             fd_loudspeaker_buffer[:, :, -1] = torch.fft.rfft(loudspeaker_buffer[:, -fft_len:], fft_len, dim=1)
             fd_real_feedback_hat = torch.sum(fd_loudspeaker_buffer.unsqueeze(-1) * fd_rir, dim=2) #[n_batch, n_bin, n_mic]
             real_feedback = torch.fft.irfft(fd_real_feedback_hat, fft_len, dim=1)[:, hop_len:, :] #[n_batch, hop_len, n_mic]
