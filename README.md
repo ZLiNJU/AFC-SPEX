@@ -8,10 +8,6 @@ Official implementation of the **ICASSP 2026** paper:
 
 **[Joint Multichannel Acoustic Feedback Cancellation and Speaker Extraction via Kalman Filter and Deep Non-Linear Spatial Filter](https://ieeexplore.ieee.org/document/11464513)**
 
-Published in the *2026 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*.
-
-**[Read the paper on IEEE Xplore](https://ieeexplore.ieee.org/document/11464513)** · **[DOI](https://doi.org/10.1109/ICASSP55912.2026.11464513)**
-
 ## System Overview
 
 ![AFC-SPEX system diagram and DNSF network architecture](assets/afc-spex-overview.png)
