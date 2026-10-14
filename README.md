@@ -38,8 +38,6 @@ The dataset and test samples are available from [Nanjing University Box](https:/
 
 ## Citation
 
-If you find this repository useful, please cite our [ICASSP 2026 paper](https://ieeexplore.ieee.org/document/11464513).
-
 ```bibtex
 @inproceedings{li2026afcspex,
   author    = {Li, Ze and Guo, Haocheng and Ge, Xiaoyang and Chen, Kai and Lu, Jing},
